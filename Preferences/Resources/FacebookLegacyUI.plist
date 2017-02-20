@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>defaults</key>
+			<string>tw.garynil.FacebookLegacyUI</string>
+			<key>PostNotification</key>
+			<string>tw.garynil.FacebookLegacyUI.settingsChanged</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>key</key>
+			<string>enableMessengerHomeTab</string>
+			<key>label</key>
+			<string>Show Messenger Button</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>tw.garynil.FacebookLegacyUI</string>
+			<key>PostNotification</key>
+			<string>tw.garynil.FacebookLegacyUI.settingsChanged</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>key</key>
+			<string>enableVideoHomeTab</string>
+			<key>label</key>
+			<string>Show Video Button</string>
+		</dict>
+		<dict>
+			<key>defaults</key>
+			<string>tw.garynil.FacebookLegacyUI</string>
+			<key>PostNotification</key>
+			<string>tw.garynil.FacebookLegacyUI.settingsChanged</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>key</key>
+			<string>enableCameraInNavigation</string>
+			<key>label</key>
+			<string>Show Camera Button</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>action</key>
+			<string>killPreferences</string>
+			<key>label</key>
+			<string>Apply</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>FacebookLegacyUI</string>
+</dict>
+</plist>

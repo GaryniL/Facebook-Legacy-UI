@@ -16,7 +16,7 @@ FacebookLegacyUI_LDFLAGS += -lAccessibility
 FacebookLegacyUI_CFLAGS += -fobjc-arc
 
 include $(THEOS_MAKE_PATH)/tweak.mk
-# SUBPROJECTS += Preferences
+SUBPROJECTS += Preferences
 include $(THEOS_MAKE_PATH)/aggregate.mk
 
 sync: stage

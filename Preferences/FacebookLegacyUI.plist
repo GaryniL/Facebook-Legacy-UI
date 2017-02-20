@@ -1,0 +1,10 @@
+{
+	entry = {
+		bundle = FacebookLegacyUI;
+		cell = PSLinkCell;
+		detail = "FacebookLegacyUIListController";
+		icon = "icon.png";
+		isController = 1;
+		label = "Facebook Legacy UI";
+	};
+}
