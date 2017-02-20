@@ -23,9 +23,6 @@ static void PO2InitPrefs() {
 
 
 %hook FBVideoHomeExperimentDefaults
-
-// Control Hometabs..
-
 // Video button in Hometabs
 - (bool)showVideoHomeTab{
     return FBLUIenableVideoHomeTab;
@@ -33,7 +30,8 @@ static void PO2InitPrefs() {
 
 // False shows messenger button in Hometabs
 - (bool)showMessengerInNavigationBar{
-    return !FBLUIenableMessengerHomeTab;
+    return !FBLUIenableMessengerHomeTab; 
+    // true 左上角
 }
 
 %end
@@ -46,6 +44,13 @@ static void PO2InitPrefs() {
 
 - (bool)shouldShowCameraButtonInNavigationBar{
     return FBLUIenableCameraInNavigation;
+}
+%end
+
+%hook FBVideoHomeExperimentConfig
+- (bool)showMessengerInNavigationBarForVideosTab{
+    return !FBLUIenableMessengerHomeTab; 
+    //true 左上角
 }
 %end
 

@@ -54,7 +54,7 @@
 
 
         PSSpecifier *group_navi = [PSSpecifier groupSpecifierWithName:@"Navigation Buttons"];
-        [group_navi setProperty:@"" forKey:@"footerText"];
+        [group_navi setProperty:@"Camera button will replace messenger button in navigationbar" forKey:@"footerText"];
         [specifiers addObject:group_navi];
 
         PSSpecifier* navi_camera = [[self loadSpecifiersFromPlistName:@"FacebookLegacyUI" target:self] objectAtIndex:2];
@@ -187,9 +187,9 @@
 
 -(void) killPreferences {
     CFNotificationCenterPostNotification(CFNotificationCenterGetDarwinNotifyCenter(), CFSTR("tw.garynil.FacebookLegacyUI.settingsChanged"), nil, nil, YES);
-
+    system("/usr/bin/killall -9 Facebook");
     UIAlertView *suicidalPreferences = [[UIAlertView alloc] initWithTitle:@"Note"
-        message:@"Kill Preferences & Facebook app to store setting. This is not a crash."
+        message:@"Respring to apply setting. This is not a crash."
         delegate:self
         cancelButtonTitle:@"OK"
         otherButtonTitles:nil];
@@ -198,9 +198,9 @@
 }
 -(void) alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
     if (buttonIndex == 0) {
-        system("/usr/bin/killall -9 Facebook");
-        sleep(0.3);
-        system("/usr/bin/killall -9 Preferences");
+        
+        sleep(0.5);
+        system("/usr/bin/killall -9 SpringBoard");
     }
 }
 -(void) openDonate {

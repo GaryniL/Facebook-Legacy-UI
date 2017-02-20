@@ -44,7 +44,7 @@
 			<key>key</key>
 			<string>enableCameraInNavigation</string>
 			<key>label</key>
-			<string>Show Camera Button</string>
+			<string>Show Camera &amp; DM Button</string>
 		</dict>
 		<dict>
 			<key>cell</key>

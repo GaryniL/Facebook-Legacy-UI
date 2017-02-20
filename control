@@ -1,0 +1,9 @@
+Package: tw.garynil.FacebookLegacyUI
+Name: Facebook Legacy UI
+Architecture: iphoneos-arm
+Description: A tweak make Facebook UI back to legacy mode (shows Messenger button / invisble Video Button)
+Homepage: https://garynil.tw
+Author: Gary niL, Hiraku
+Section: Tweaks
+Version: 1.0.2
+Maintainer: Gary Lin <garynil1635@gmail.com>, Gary Lin <hiraku@iphne4.tw>
