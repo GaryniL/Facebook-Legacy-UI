@@ -83,6 +83,14 @@
         [specifiers addObject:donate];
 
 
+        PSSpecifier *codeG = [PSSpecifier groupSpecifierWithName:@""];
+        [codeG setProperty:@"" forKey:@"footerText"];
+        [specifiers addObject:codeG];
+        PSSpecifier *codeLink = [PSSpecifier preferenceSpecifierNamed:@"OpenSource on Github" target:self set:NULL get:NULL detail:Nil cell:PSButtonCell edit:Nil];
+        [codeLink setProperty:[FacebookLegacyUIButtonCell class] forKey:@"cellClass"];
+        [codeLink setProperty:[UIImage imageWithContentsOfFile:@"/Library/PreferenceBundles/FacebookLegacyUI.bundle/github.png"] forKey:@"iconImage"];
+        codeLink->action = @selector(openGithub);
+        [specifiers addObject:codeLink];
 
         PSSpecifier *aboutG = [PSSpecifier groupSpecifierWithName:@"About"];
         [specifiers addObject:aboutG];
@@ -205,6 +213,10 @@
 }
 -(void) openDonate {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=garynil1635%40gmail%2ecom&lc=US&item_name=Gary%20niL%27s%20tweak&no_note=0&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHostedGuest"]];
+}
+
+-(void) openGithub {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/GaryniL/Facebook-Legacy-UI"]];
 }
 
 -(void) openTwitter {
