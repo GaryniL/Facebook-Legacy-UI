@@ -104,7 +104,6 @@ static FBTabBarItemView *videoButton;
 		newButtonIndex = viewCount/2 + 1;
 	}
 
-	PO2Log([NSString stringWithFormat:@"view count %f", self.frame.size.width], 1);
 	UIView *sampleView ;
 	for (UIView *subview in [self subviews]) {
         // Do what you want to do with the subview
@@ -126,83 +125,94 @@ static FBTabBarItemView *videoButton;
 
     if (!messengerHomeTabButton && sampleView) {
     	messengerHomeTabButton = [[UIButton alloc] init];
-    	messengerHomeTabButton.backgroundColor = [UIColor redColor];
     }
 
     if(![messengerHomeTabButton isDescendantOfView:self]) {
+    	// messengerHomeTabButton.backgroundColor = [UIColor redColor];
     	[messengerHomeTabButton addTarget:self action:@selector(openMessenger:) forControlEvents:UIControlEventTouchUpInside];
     	[messengerHomeTabButton setFrame:CGRectMake(0 + sampleView.frame.size.width*newButtonIndex, sampleView.frame.origin.y, sampleView.frame.size.width, sampleView.frame.size.height)];
     	[self addSubview:messengerHomeTabButton];
+
+        UIImageView *messengerImageView = [[UIImageView alloc] init];
+        CGRect buttonFrame = messengerHomeTabButton.frame;
+        float h = 22;
+        float w = 22;
+        [messengerImageView setFrame:CGRectMake((buttonFrame.size.width - w)/2,(buttonFrame.size.height - h)/2,w,h)];
+        NSBundle *sharedFramework = [NSBundle bundleForClass:[%c(FBTabBarItemView) class]];
+        // PO2Log([NSString stringWithFormat:@"Bundle %@",], 1);
+        UIImage *icon = [UIImage imageNamed:@"filledIconMessenger" inBundle:sharedFramework compatibleWithTraitCollection:[UITraitCollection traitCollectionWithDisplayScale:[UIScreen mainScreen].scale]];
+        icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        [messengerImageView setImage:icon];
+        [messengerImageView setTintColor:[UIColor colorWithRed:0.564 green:0.58 blue:0.613 alpha:1]];
+        [messengerHomeTabButton addSubview:messengerImageView];
     }
-
-
-    PO2Log([NSString stringWithFormat:@"==============================="], 1);
+    // PO2Log([NSString stringWithFormat:@"==============================="], 1);
 }
 
 %new
 -(void)openMessenger:(UIButton *)sender{
-	PO2Log([NSString stringWithFormat:@"YOYODIY"], 1);
+	// PO2Log([NSString stringWithFormat:@"YOYODIY"], 1);
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
 }
 
 %end
 
-%hook FBTabBarItemView
-- (id)init {
-    PO2StringLog(@"Hi");
-    return %orig;
-}
+// %hook FBTabBarItemView
+// - (id)init {
+//     PO2StringLog(@"Hi");
+//     return %orig;
+// }
 
-- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
-{
-    PO2Log([NSString stringWithFormat:@"Evets is %@", [event touchesForView:videoButton]], 1);
-    if ([event touchesForView:videoButton]) {
-         /* code */
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
-    }
-    else {
-        %orig;
-    }
-    // PO2Log([NSString stringWithFormat:@"Title is %@", @"hi"], 1);
-    // [arViewController.arView touchesEnded:touches withEvent:event];
-}
+// - (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
+// {
+//     PO2Log([NSString stringWithFormat:@"Evets is %@", [event touchesForView:videoButton]], 1);
+//     if ([event touchesForView:videoButton]) {
+//          /* code */
+//         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
+//     }
+//     else {
+//         %orig;
+//     }
+//     // PO2Log([NSString stringWithFormat:@"Title is %@", @"hi"], 1);
+//     // [arViewController.arView touchesEnded:touches withEvent:event];
+// }
 
--(void)setBackgroundImage:(UIImage *)image {
-	%orig;
-    // UIImage *image = %orig;
-    PO2StringLog([self title]);
-    PO2Log([NSString stringWithFormat:@"BGImage is %@", [image accessibilityIdentifier]], 1);
-}
+// -(void)setBackgroundImage:(UIImage *)image {
+// 	%orig;
+//     // UIImage *image = %orig;
+//     PO2StringLog([self title]);
+//     PO2Log([NSString stringWithFormat:@"BGImage is %@", [image accessibilityIdentifier]], 1);
+// }
 
-- (void)setImage:(UIImage *)image {
-    %orig;
-    // UIImage *image = %orig;
-    PO2StringLog([self title]);
-    PO2Log([NSString stringWithFormat:@"Image is %@", [image accessibilityIdentifier]], 1);
-}
+// - (void)setImage:(UIImage *)image {
+//     %orig;
+//     // UIImage *image = %orig;
+//     PO2StringLog([self title]);
+//     PO2Log([NSString stringWithFormat:@"Image is %@", [image accessibilityIdentifier]], 1);
+// }
 
-- (void)setTitle:(NSString *)title {
-    %orig;
+// - (void)setTitle:(NSString *)title {
+//     %orig;
 
-    if ([title isEqualToString:@"影片"]) {
-        videoButton = self;
-        PO2Log([NSString stringWithFormat:@"Title is %@", title], 1);
-        for (UIView *subview in self.subviews) {
+//     if ([title isEqualToString:@"影片"]) {
+//         videoButton = self;
+//         PO2Log([NSString stringWithFormat:@"Title is %@", title], 1);
+//         for (UIView *subview in self.subviews) {
 
-            for (UIGestureRecognizer *recognizer in subview.gestureRecognizers)
-        {
-            //Do something with recognizer
-            PO2Log([NSString stringWithFormat:@"recognizer is %@", recognizer], 1);
-        }
-        }
-    }
-}
+//             for (UIGestureRecognizer *recognizer in subview.gestureRecognizers)
+//         {
+//             //Do something with recognizer
+//             PO2Log([NSString stringWithFormat:@"recognizer is %@", recognizer], 1);
+//         }
+//         }
+//     }
+// }
 
-- (NSString *)title {
-    PO2StringLog(%orig);
-    return %orig;
-}
-%end
+// - (NSString *)title {
+//     PO2StringLog(%orig);
+//     return %orig;
+// }
+// %end
 
 %ctor
 {
