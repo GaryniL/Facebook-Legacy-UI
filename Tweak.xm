@@ -152,7 +152,12 @@ static FBTabBarItemView *videoButton;
 %new
 -(void)openMessenger:(UIButton *)sender{
 	// PO2Log([NSString stringWithFormat:@"YOYODIY"], 1);
-	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb-messenger://"]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
+    }
+	else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/messenger/id454638411?mt=8"]];
+    }
 }
 
 %end
