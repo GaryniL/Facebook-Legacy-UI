@@ -85,7 +85,7 @@ static FBTabBarItemView *videoButton;
 -(void)layoutSubviews{
 	%orig();
 	if (!FBLUIenableMessengerHomeTab) {
-		return
+		return;
 	}
 	int viewCount = 0;
 	double viewCountMid = 0;
