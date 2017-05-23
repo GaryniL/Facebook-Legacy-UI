@@ -60,3 +60,7 @@ fastlane/screenshots
 iOSInjectionProject/
 obj
 .theos
+layout
+*.sublime-project
+*.sublime-workspace
+debs
