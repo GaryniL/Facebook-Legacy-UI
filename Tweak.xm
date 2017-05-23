@@ -11,6 +11,7 @@ static BOOL FBLUIenableMessengerHomeTab = NO;
 
 static BOOL FBLUIenableCameraInNavigation = NO;
 
+static UIButton* messengerHomeTabButton;
 
 static void PO2InitPrefs() {
 	// Load preference file into NSDictionary
@@ -24,7 +25,7 @@ static void PO2InitPrefs() {
 
 
 @interface FBTabBar : UIView
-
+-(void)openMessenger:(UIButton *)sender;
 @end
 
 @interface FBTabBarItemView : UIView
@@ -83,6 +84,7 @@ static FBTabBarItemView *videoButton;
 
 	int viewCount = 0;
 	double viewCountMid = 0;
+	int newButtonIndex = 0;
 
 	// Caculate views
 	for (UIView *subview in [self subviews]) {
@@ -91,25 +93,23 @@ static FBTabBarItemView *videoButton;
         }
 	}
 
-	// Testing
-	viewCount = 5;
-
 	if (viewCount % 2 == 0) {
 		// 偶數
 		viewCountMid = viewCount/2 ;
+		newButtonIndex = viewCountMid + 1;
 	} else {
 		// 奇數
 		viewCountMid = (double)viewCount/2 ;
+		newButtonIndex = viewCount/2 + 1;
 	}
 
-	PO2Log([NSString stringWithFormat:@"view count %d %f", viewCount,viewCountMid], 1);
-
+	// PO2Log([NSString stringWithFormat:@"view count %d %f", viewCount,viewCountMid], 1);
+	UIView *sampleView ;
 	for (UIView *subview in [self subviews]) {
         // Do what you want to do with the subview
         if ([subview isKindOfClass:[%c(FBTabBarItemView) class]]) {
-
-        	PO2Log([NSString stringWithFormat:@"view is %@", subview], 1);
-
+        	// PO2Log([NSString stringWithFormat:@"view is %@", subview], 1);
+        	sampleView = subview;
         	if (subview.tag < viewCountMid) {
         		// subview.backgroundColor = [UIColor redColor];
         		[subview setFrame:CGRectMake(0 + subview.frame.size.width*(viewCount)/(viewCount+1)*subview.tag, subview.frame.origin.y, subview.frame.size.width*(viewCount)/(viewCount+1), subview.frame.size.height)];
@@ -119,7 +119,23 @@ static FBTabBarItemView *videoButton;
         	}
         }
     }
+
+    if (!messengerHomeTabButton && sampleView) {
+    	messengerHomeTabButton = [[UIButton alloc] init];
+    	messengerHomeTabButton.backgroundColor = [UIColor redColor];
+    	[messengerHomeTabButton setFrame:CGRectMake(0 + sampleView.frame.size.width*newButtonIndex, sampleView.frame.origin.y, sampleView.frame.size.width, sampleView.frame.size.height)];
+    	[messengerHomeTabButton addTarget:self action:@selector(openMessenger:) forControlEvents:UIControlEventTouchUpInside];
+    	[self addSubview:messengerHomeTabButton];
+    }
+
+
     PO2Log([NSString stringWithFormat:@"==============================="], 1);
+}
+
+%new
+-(void)openMessenger:(UIButton *)sender{
+	PO2Log([NSString stringWithFormat:@"YOYODIY"], 1);
+	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
 }
 
 %end
