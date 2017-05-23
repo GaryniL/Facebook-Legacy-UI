@@ -135,12 +135,12 @@ static FBTabBarItemView *videoButton;
 
         UIImageView *messengerImageView = [[UIImageView alloc] init];
         CGRect buttonFrame = messengerHomeTabButton.frame;
-        float h = 22;
-        float w = 22;
+        float h = 24;
+        float w = 24;
         [messengerImageView setFrame:CGRectMake((buttonFrame.size.width - w)/2,(buttonFrame.size.height - h)/2,w,h)];
         NSBundle *sharedFramework = [NSBundle bundleForClass:[%c(FBTabBarItemView) class]];
         // PO2Log([NSString stringWithFormat:@"Bundle %@",], 1);
-        UIImage *icon = [UIImage imageNamed:@"filledIconMessenger" inBundle:sharedFramework compatibleWithTraitCollection:[UITraitCollection traitCollectionWithDisplayScale:[UIScreen mainScreen].scale]];
+        UIImage *icon = [UIImage imageNamed:@"fb_glyphs_messages_24" inBundle:sharedFramework compatibleWithTraitCollection:[UITraitCollection traitCollectionWithDisplayScale:[UIScreen mainScreen].scale]];
         icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         [messengerImageView setImage:icon];
         [messengerImageView setTintColor:[UIColor colorWithRed:0.564 green:0.58 blue:0.613 alpha:1]];
