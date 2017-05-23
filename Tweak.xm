@@ -69,16 +69,19 @@ static FBTabBarItemView *videoButton;
 
 %hook FBNavigationBarDecorator
 - (bool)_hasRightMessengerButton{
-	PO2Log([NSString stringWithFormat:@"FBNavigationBarDecorator = _hasRightMessengerButton %d",%orig], 1);
-	return false;
+	// disable messenger show on right top
+	// PO2Log([NSString stringWithFormat:@"FBNavigationBarDecorator = _hasRightMessengerButton %d",%orig], 1);
+	return !FBLUIenableMessengerHomeTab;
 }
+// - (bool)_hasLeftMessengerButton{
+// 	// disable messenger show on left top
+// 	// PO2Log([NSString stringWithFormat:@"FBNavigationBarDecorator = _hasRightMessengerButton %d",%orig], 1);
+// 	return !FBLUIenableMessengerHomeTab;
+// }
 %end
 
-// %hook FBTabBarItemView
 %hook FBTabBar
 
-// -(void)_rebuildTabBarViews{
-// -(void)_layoutTabBarItems{
 -(void)layoutSubviews{
 	%orig();
 
@@ -151,7 +154,6 @@ static FBTabBarItemView *videoButton;
 
 %new
 -(void)openMessenger:(UIButton *)sender{
-	// PO2Log([NSString stringWithFormat:@"YOYODIY"], 1);
 	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
 }
 
