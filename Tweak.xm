@@ -85,6 +85,7 @@ static FBTabBarItemView *videoButton;
 	int viewCount = 0;
 	double viewCountMid = 0;
 	int newButtonIndex = 0;
+	double thisWidth = self.frame.size.width;
 
 	// Caculate views
 	for (UIView *subview in [self subviews]) {
@@ -103,17 +104,22 @@ static FBTabBarItemView *videoButton;
 		newButtonIndex = viewCount/2 + 1;
 	}
 
-	// PO2Log([NSString stringWithFormat:@"view count %d %f", viewCount,viewCountMid], 1);
+	PO2Log([NSString stringWithFormat:@"view count %f", self.frame.size.width], 1);
 	UIView *sampleView ;
 	for (UIView *subview in [self subviews]) {
         // Do what you want to do with the subview
         if ([subview isKindOfClass:[%c(FBTabBarItemView) class]]) {
         	// PO2Log([NSString stringWithFormat:@"view is %@", subview], 1);
-        	sampleView = subview;
+        	if (!sampleView){
+        		sampleView = subview;
+        	}
+
         	if (subview.tag < viewCountMid) {
-        		[subview setFrame:CGRectMake(0 + subview.frame.size.width*(viewCount)/(viewCount+1)*subview.tag, subview.frame.origin.y, subview.frame.size.width*(viewCount)/(viewCount+1), subview.frame.size.height)];
+        		// subview.backgroundColor = [UIColor redColor];
+        		[subview setFrame:CGRectMake(0 + thisWidth/(viewCount+1)*subview.tag, sampleView.frame.origin.y, thisWidth/(viewCount+1), sampleView.frame.size.height)];
         	} else {
-        		[subview setFrame:CGRectMake(0 + subview.frame.size.width*(viewCount)/(viewCount+1)*(subview.tag+1), subview.frame.origin.y, subview.frame.size.width*(viewCount)/(viewCount+1), subview.frame.size.height)];
+        		// subview.backgroundColor = [UIColor blueColor];
+        		[subview setFrame:CGRectMake(0 + thisWidth/(viewCount+1)*(subview.tag+1), sampleView.frame.origin.y, thisWidth/(viewCount+1), sampleView.frame.size.height)];
         	}
         }
     }
@@ -121,8 +127,11 @@ static FBTabBarItemView *videoButton;
     if (!messengerHomeTabButton && sampleView) {
     	messengerHomeTabButton = [[UIButton alloc] init];
     	messengerHomeTabButton.backgroundColor = [UIColor redColor];
-    	[messengerHomeTabButton setFrame:CGRectMake(0 + sampleView.frame.size.width*newButtonIndex, sampleView.frame.origin.y, sampleView.frame.size.width, sampleView.frame.size.height)];
+    }
+
+    if(![messengerHomeTabButton isDescendantOfView:self]) {
     	[messengerHomeTabButton addTarget:self action:@selector(openMessenger:) forControlEvents:UIControlEventTouchUpInside];
+    	[messengerHomeTabButton setFrame:CGRectMake(0 + sampleView.frame.size.width*newButtonIndex, sampleView.frame.origin.y, sampleView.frame.size.width, sampleView.frame.size.height)];
     	[self addSubview:messengerHomeTabButton];
     }
 
