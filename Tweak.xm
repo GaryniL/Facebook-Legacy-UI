@@ -151,63 +151,6 @@ static FBTabBarItemView *videoButton;
 
 %end
 
-// %hook FBTabBarItemView
-// - (id)init {
-//     PO2StringLog(@"Hi");
-//     return %orig;
-// }
-
-// - (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
-// {
-//     PO2Log([NSString stringWithFormat:@"Evets is %@", [event touchesForView:videoButton]], 1);
-//     if ([event touchesForView:videoButton]) {
-//          /* code */
-//         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
-//     }
-//     else {
-//         %orig;
-//     }
-//     // PO2Log([NSString stringWithFormat:@"Title is %@", @"hi"], 1);
-//     // [arViewController.arView touchesEnded:touches withEvent:event];
-// }
-
-// -(void)setBackgroundImage:(UIImage *)image {
-// 	%orig;
-//     // UIImage *image = %orig;
-//     PO2StringLog([self title]);
-//     PO2Log([NSString stringWithFormat:@"BGImage is %@", [image accessibilityIdentifier]], 1);
-// }
-
-// - (void)setImage:(UIImage *)image {
-//     %orig;
-//     // UIImage *image = %orig;
-//     PO2StringLog([self title]);
-//     PO2Log([NSString stringWithFormat:@"Image is %@", [image accessibilityIdentifier]], 1);
-// }
-
-// - (void)setTitle:(NSString *)title {
-//     %orig;
-
-//     if ([title isEqualToString:@"影片"]) {
-//         videoButton = self;
-//         PO2Log([NSString stringWithFormat:@"Title is %@", title], 1);
-//         for (UIView *subview in self.subviews) {
-
-//             for (UIGestureRecognizer *recognizer in subview.gestureRecognizers)
-//         {
-//             //Do something with recognizer
-//             PO2Log([NSString stringWithFormat:@"recognizer is %@", recognizer], 1);
-//         }
-//         }
-//     }
-// }
-
-// - (NSString *)title {
-//     PO2StringLog(%orig);
-//     return %orig;
-// }
-// %end
-
 %ctor
 {
   	// Init Preference
