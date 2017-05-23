@@ -96,7 +96,7 @@ static FBTabBarItemView *videoButton;
 	if (viewCount % 2 == 0) {
 		// 偶數
 		viewCountMid = viewCount/2 ;
-		newButtonIndex = viewCountMid + 1;
+		newButtonIndex = viewCountMid ;
 	} else {
 		// 奇數
 		viewCountMid = (double)viewCount/2 ;
@@ -111,10 +111,8 @@ static FBTabBarItemView *videoButton;
         	// PO2Log([NSString stringWithFormat:@"view is %@", subview], 1);
         	sampleView = subview;
         	if (subview.tag < viewCountMid) {
-        		// subview.backgroundColor = [UIColor redColor];
         		[subview setFrame:CGRectMake(0 + subview.frame.size.width*(viewCount)/(viewCount+1)*subview.tag, subview.frame.origin.y, subview.frame.size.width*(viewCount)/(viewCount+1), subview.frame.size.height)];
         	} else {
-        		// subview.backgroundColor = [UIColor blueColor];
         		[subview setFrame:CGRectMake(0 + subview.frame.size.width*(viewCount)/(viewCount+1)*(subview.tag+1), subview.frame.origin.y, subview.frame.size.width*(viewCount)/(viewCount+1), subview.frame.size.height)];
         	}
         }
