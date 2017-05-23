@@ -69,19 +69,24 @@ static FBTabBarItemView *videoButton;
 
 %hook FBNavigationBarDecorator
 - (bool)_hasRightMessengerButton{
-	PO2Log([NSString stringWithFormat:@"FBNavigationBarDecorator = _hasRightMessengerButton %d",%orig], 1);
-	return false;
+	// disable messenger show on right top
+	// PO2Log([NSString stringWithFormat:@"FBNavigationBarDecorator = _hasRightMessengerButton %d",%orig], 1);
+	return !FBLUIenableMessengerHomeTab;
 }
+// - (bool)_hasLeftMessengerButton{
+// 	// disable messenger show on left top
+// 	// PO2Log([NSString stringWithFormat:@"FBNavigationBarDecorator = _hasRightMessengerButton %d",%orig], 1);
+// 	return !FBLUIenableMessengerHomeTab;
+// }
 %end
 
-// %hook FBTabBarItemView
 %hook FBTabBar
 
-// -(void)_rebuildTabBarViews{
-// -(void)_layoutTabBarItems{
 -(void)layoutSubviews{
 	%orig();
-
+	if (!FBLUIenableMessengerHomeTab) {
+		return
+	}
 	int viewCount = 0;
 	double viewCountMid = 0;
 	int newButtonIndex = 0;
@@ -146,12 +151,10 @@ static FBTabBarItemView *videoButton;
         [messengerImageView setTintColor:[UIColor colorWithRed:0.564 green:0.58 blue:0.613 alpha:1]];
         [messengerHomeTabButton addSubview:messengerImageView];
     }
-    // PO2Log([NSString stringWithFormat:@"==============================="], 1);
 }
 
 %new
 -(void)openMessenger:(UIButton *)sender{
-	// PO2Log([NSString stringWithFormat:@"YOYODIY"], 1);
     if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb-messenger://"]]) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
     }
