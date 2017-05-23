@@ -84,7 +84,9 @@ static FBTabBarItemView *videoButton;
 
 -(void)layoutSubviews{
 	%orig();
-
+	if (!FBLUIenableMessengerHomeTab) {
+		return
+	}
 	int viewCount = 0;
 	double viewCountMid = 0;
 	int newButtonIndex = 0;
@@ -149,12 +151,16 @@ static FBTabBarItemView *videoButton;
         [messengerImageView setTintColor:[UIColor colorWithRed:0.564 green:0.58 blue:0.613 alpha:1]];
         [messengerHomeTabButton addSubview:messengerImageView];
     }
-    // PO2Log([NSString stringWithFormat:@"==============================="], 1);
 }
 
 %new
 -(void)openMessenger:(UIButton *)sender{
-	[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"fb-messenger://"]]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
+    }
+	else {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/app/messenger/id454638411?mt=8"]];
+    }
 }
 
 %end
