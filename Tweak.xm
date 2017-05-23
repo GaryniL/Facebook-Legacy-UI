@@ -80,26 +80,42 @@ static FBTabBarItemView *videoButton;
 // -(void)_layoutTabBarItems{
 -(void)layoutSubviews{
 	%orig();
+
+	int viewCount = 0;
+	double viewCountMid = 0;
+
+	// Caculate views
+	for (UIView *subview in [self subviews]) {
+		if ([subview isKindOfClass:[%c(FBTabBarItemView) class]]) {
+        	viewCount += 1;
+        }
+	}
+
+	// Testing
+	viewCount = 5;
+
+	if (viewCount % 2 == 0) {
+		// 偶數
+		viewCountMid = viewCount/2 ;
+	} else {
+		// 奇數
+		viewCountMid = (double)viewCount/2 ;
+	}
+
+	PO2Log([NSString stringWithFormat:@"view count %d %f", viewCount,viewCountMid], 1);
+
 	for (UIView *subview in [self subviews]) {
         // Do what you want to do with the subview
         if ([subview isKindOfClass:[%c(FBTabBarItemView) class]]) {
 
-        	// PO2Log([NSString stringWithFormat:@"view is %@", subview], 1);
+        	PO2Log([NSString stringWithFormat:@"view is %@", subview], 1);
 
-        	if (subview.tag <= 1) {
+        	if (subview.tag < viewCountMid) {
         		// subview.backgroundColor = [UIColor redColor];
-        		if (subview.tag == 1) {
-        			[subview setFrame:CGRectMake(0 + subview.frame.size.width*4/5*1, subview.frame.origin.y, subview.frame.size.width*4/5, subview.frame.size.height)];
-        		} else {
-        			[subview setFrame:CGRectMake(0, subview.frame.origin.y, subview.frame.size.width*4/5, subview.frame.size.height)];
-        		}
+        		[subview setFrame:CGRectMake(0 + subview.frame.size.width*(viewCount)/(viewCount+1)*subview.tag, subview.frame.origin.y, subview.frame.size.width*(viewCount)/(viewCount+1), subview.frame.size.height)];
         	} else {
         		// subview.backgroundColor = [UIColor blueColor];
-        		if (subview.tag == 2) {
-        			[subview setFrame:CGRectMake(0 + subview.frame.size.width*4/5*3, subview.frame.origin.y, subview.frame.size.width*4/5, subview.frame.size.height)];
-        		} else {
-        			[subview setFrame:CGRectMake(0 + subview.frame.size.width*4/5*4, subview.frame.origin.y, subview.frame.size.width*4/5, subview.frame.size.height)];
-        		}
+        		[subview setFrame:CGRectMake(0 + subview.frame.size.width*(viewCount)/(viewCount+1)*(subview.tag+1), subview.frame.origin.y, subview.frame.size.width*(viewCount)/(viewCount+1), subview.frame.size.height)];
         	}
         }
     }
