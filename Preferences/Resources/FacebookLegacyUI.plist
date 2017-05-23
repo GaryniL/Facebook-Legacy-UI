@@ -16,7 +16,7 @@
 			<key>key</key>
 			<string>enableMessengerHomeTab</string>
 			<key>label</key>
-			<string>Show Messenger Button</string>
+			<string>Show Messenger Button in Home Tab</string>
 		</dict>
 		<dict>
 			<key>defaults</key>
@@ -30,7 +30,7 @@
 			<key>key</key>
 			<string>enableVideoHomeTab</string>
 			<key>label</key>
-			<string>Show Video Button</string>
+			<string>Show Video Button in Home Tab</string>
 		</dict>
 		<dict>
 			<key>defaults</key>
