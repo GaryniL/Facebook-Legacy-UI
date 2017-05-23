@@ -11,6 +11,7 @@ static BOOL FBLUIenableMessengerHomeTab = NO;
 
 static BOOL FBLUIenableCameraInNavigation = NO;
 
+
 static void PO2InitPrefs() {
 	// Load preference file into NSDictionary
 	PO2SyncPrefs();
@@ -22,6 +23,9 @@ static void PO2InitPrefs() {
 }
 
 
+@interface FBTabBar : UIView
+
+@end
 
 @interface FBTabBarItemView : UIView
 - (NSString *)title;
@@ -37,7 +41,7 @@ static FBTabBarItemView *videoButton;
 
 // False shows messenger button in Hometabs
 - (bool)showMessengerInNavigationBar{
-    return !FBLUIenableMessengerHomeTab; 
+    return !FBLUIenableMessengerHomeTab;
     // true 左上角
 }
 
@@ -56,9 +60,52 @@ static FBTabBarItemView *videoButton;
 
 %hook FBVideoHomeExperimentConfig
 - (bool)showMessengerInNavigationBarForVideosTab{
-    return !FBLUIenableMessengerHomeTab; 
+    return !FBLUIenableMessengerHomeTab;
     //true 左上角
 }
+%end
+
+
+%hook FBNavigationBarDecorator
+- (bool)_hasRightMessengerButton{
+	PO2Log([NSString stringWithFormat:@"FBNavigationBarDecorator = _hasRightMessengerButton %d",%orig], 1);
+	return false;
+}
+%end
+
+// %hook FBTabBarItemView
+%hook FBTabBar
+
+// -(void)_rebuildTabBarViews{
+// -(void)_layoutTabBarItems{
+-(void)layoutSubviews{
+	%orig();
+	for (UIView *subview in [self subviews]) {
+        // Do what you want to do with the subview
+        if ([subview isKindOfClass:[%c(FBTabBarItemView) class]]) {
+
+        	// PO2Log([NSString stringWithFormat:@"view is %@", subview], 1);
+
+        	if (subview.tag <= 1) {
+        		// subview.backgroundColor = [UIColor redColor];
+        		if (subview.tag == 1) {
+        			[subview setFrame:CGRectMake(0 + subview.frame.size.width*4/5*1, subview.frame.origin.y, subview.frame.size.width*4/5, subview.frame.size.height)];
+        		} else {
+        			[subview setFrame:CGRectMake(0, subview.frame.origin.y, subview.frame.size.width*4/5, subview.frame.size.height)];
+        		}
+        	} else {
+        		// subview.backgroundColor = [UIColor blueColor];
+        		if (subview.tag == 2) {
+        			[subview setFrame:CGRectMake(0 + subview.frame.size.width*4/5*3, subview.frame.origin.y, subview.frame.size.width*4/5, subview.frame.size.height)];
+        		} else {
+        			[subview setFrame:CGRectMake(0 + subview.frame.size.width*4/5*4, subview.frame.origin.y, subview.frame.size.width*4/5, subview.frame.size.height)];
+        		}
+        	}
+        }
+    }
+    PO2Log([NSString stringWithFormat:@"==============================="], 1);
+}
+
 %end
 
 %hook FBTabBarItemView
@@ -69,16 +116,23 @@ static FBTabBarItemView *videoButton;
 
 - (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
 {
-     PO2Log([NSString stringWithFormat:@"Evets is %@", [event touchesForView:videoButton]], 1);
-     if ([event touchesForView:videoButton]) {
+    PO2Log([NSString stringWithFormat:@"Evets is %@", [event touchesForView:videoButton]], 1);
+    if ([event touchesForView:videoButton]) {
          /* code */
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"fb-messenger://"]];
-     }
-        else {
-            %orig;
-        }
+    }
+    else {
+        %orig;
+    }
     // PO2Log([NSString stringWithFormat:@"Title is %@", @"hi"], 1);
     // [arViewController.arView touchesEnded:touches withEvent:event];
+}
+
+-(void)setBackgroundImage:(UIImage *)image {
+	%orig;
+    // UIImage *image = %orig;
+    PO2StringLog([self title]);
+    PO2Log([NSString stringWithFormat:@"BGImage is %@", [image accessibilityIdentifier]], 1);
 }
 
 - (void)setImage:(UIImage *)image {
@@ -90,7 +144,7 @@ static FBTabBarItemView *videoButton;
 
 - (void)setTitle:(NSString *)title {
     %orig;
-    
+
     if ([title isEqualToString:@"影片"]) {
         videoButton = self;
         PO2Log([NSString stringWithFormat:@"Title is %@", title], 1);
@@ -111,7 +165,7 @@ static FBTabBarItemView *videoButton;
 }
 %end
 
-%ctor 
+%ctor
 {
   	// Init Preference
 	PO2InitPrefs();
