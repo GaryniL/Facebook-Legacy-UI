@@ -152,7 +152,7 @@ static FBTabBarItemView *videoButton;
         float h = 24;
         float w = 24;
         [messengerImageView setFrame:CGRectMake((buttonFrame.size.width - w)/2,(buttonFrame.size.height - h)/2,w,h)];
-        NSBundle *sharedFramework = [NSBundle bundleForClass:[%c(FBTabBarItemView) class]];
+        NSBundle *sharedFramework = [NSBundle bundleForClass:[%c(FBTabBar) class]];
         // PO2Log([NSString stringWithFormat:@"Bundle %@",], 1);
         UIImage *icon = [UIImage imageNamed:@"fb_glyphs_messages_24" inBundle:sharedFramework compatibleWithTraitCollection:[UITraitCollection traitCollectionWithDisplayScale:[UIScreen mainScreen].scale]];
         icon = [icon imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
