@@ -32,6 +32,11 @@ static void PO2InitPrefs() {
 - (NSString *)title;
 @end
 
+@interface FBTabBarItemDefaultView : UIView
+- (NSString *)title;
+@end
+
+
 static FBTabBarItemView *videoButton;
 
 %hook FBVideoHomeExperimentDefaults
@@ -81,8 +86,10 @@ static FBTabBarItemView *videoButton;
 %end
 
 %hook FBTabBar
-
+// -(void)_layoutTabBarItems{
+// -(void)touchesBegan:(id)arg1 withEvent:(id)arg2 {
 -(void)layoutSubviews{
+    PO2Log([NSString stringWithFormat:@"FBTabBar = layoutSubviews"], 1);
 	%orig();
 	if (!FBLUIenableMessengerHomeTab) {
 		return;
@@ -94,7 +101,7 @@ static FBTabBarItemView *videoButton;
 
 	// Caculate views
 	for (UIView *subview in [self subviews]) {
-		if ([subview isKindOfClass:[%c(FBTabBarItemView) class]]) {
+		if ([subview isKindOfClass:[%c(FBTabBarItemView) class]]  || [subview isKindOfClass:[%c(FBTabBarItemDefaultView) class]]) {
         	viewCount += 1;
         }
 	}
@@ -112,7 +119,9 @@ static FBTabBarItemView *videoButton;
 	UIView *sampleView ;
 	for (UIView *subview in [self subviews]) {
         // Do what you want to do with the subview
-        if ([subview isKindOfClass:[%c(FBTabBarItemView) class]]) {
+        // PO2Log([NSString stringWithFormat:@"view is %@", subview], 1);
+        if ([subview isKindOfClass:[%c(FBTabBarItemView) class]] || [subview isKindOfClass:[%c(FBTabBarItemDefaultView) class]]) {
+            //
         	// PO2Log([NSString stringWithFormat:@"view is %@", subview], 1);
         	if (!sampleView){
         		sampleView = subview;
@@ -133,7 +142,7 @@ static FBTabBarItemView *videoButton;
     }
 
     if(![messengerHomeTabButton isDescendantOfView:self]) {
-    	// messengerHomeTabButton.backgroundColor = [UIColor redColor];
+    	// messengerHomeTabButton.backgroundColor = [UIColor greenColor];
     	[messengerHomeTabButton addTarget:self action:@selector(openMessenger:) forControlEvents:UIControlEventTouchUpInside];
     	[messengerHomeTabButton setFrame:CGRectMake(0 + sampleView.frame.size.width*newButtonIndex, sampleView.frame.origin.y, sampleView.frame.size.width, sampleView.frame.size.height)];
     	[self addSubview:messengerHomeTabButton];
